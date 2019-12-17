@@ -1,0 +1,28 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+body{
+    display: flex;
+    justify-content: center;
+    padding-bottom: 500px;
+}
+div.comment{
+    width: 500px;
+    border: 1px solid black;
+    padding: 20px 10px 0 5px;
+}
+textarea{
+    width: 500px;
+    height: 180px;
+}
+div.comment_child_1{
+    margin-left: 30px;
+    border: 1px solid black;
+    padding: 20px 10px 0 5px;
+}
+div.comment_child_2{
+    margin-left: 60px;
+    border: 1px solid black;
+    padding: 20px 10px 0 5px;
+}

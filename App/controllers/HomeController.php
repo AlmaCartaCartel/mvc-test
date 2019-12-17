@@ -1,12 +1,15 @@
 <?php
 
 use core\Controller;
+use models\CommentsModel;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        $this->view('home');
+
+        $comments = CommentsModel::getComments();
+        $this->view('home', $comments);
     }
 
 

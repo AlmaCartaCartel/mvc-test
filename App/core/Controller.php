@@ -1,21 +1,24 @@
 <?php
-
 namespace core;
+
+session_start();
 
 class Controller
 {
     public $model;
     public $view;
 
-    public function view($view, $data = null)
+    public function session($status, $value)
     {
-        $v =  new View();
-        $v -> generate($view, $data);
+        $_SESSION[$status] = $value;
     }
 
-    public function clear()
-    {
-        file_put_contents('W:\domains\test2/index.php', "<?php ini_set(\'display_errors\', 1); require_once \'App/index.php\'; use core\Route; Route::start();");
+    public function view($view, $data){
+        View::generate($view, $data);
     }
 
+    public function redirect($route)
+    {
+        Route::redirect($route);
+    }
 }

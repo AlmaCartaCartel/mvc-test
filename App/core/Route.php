@@ -52,10 +52,6 @@ class Route
             */
             Route::ErrorPage404();
         }
-
-//        echo "Model: $model_file <br>";
-//        echo "Controller: $controller_file <br>";
-//        echo "Action: $action_name <br>";
         // создаем контроллер
         $controller = new $controller_name;
         $action = $action_name;
@@ -79,13 +75,13 @@ class Route
 //        header('HTTP/ 1.1 404 Not Found');
 //        header("Status: 404 Not Found");
 //        header('Location:'.$host.'404');
-
+        echo $_POST['message'];
         die($host.'404');
+
     }
 
-    static function redirect()
+    static function redirect($page = '')
     {
-        return header("Location: http://mvc-test/");
+        return header("Location: /{$page}");
     }
-
 }
