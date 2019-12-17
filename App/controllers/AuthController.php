@@ -19,12 +19,12 @@ class AuthController extends Controller
 
         if (!$user){
             $this->session('status', 'Нет такого пользователя!');
-            $this->redirect('auth');
+            Route::redirect('auth');
         }else{
             $this->session('status', 'Вы авторизировались!');
             $this->session('auth', $user);
 
-            $this->redirect('home');
+            Route::redirect('home');
         }
     }
 

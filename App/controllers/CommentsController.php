@@ -18,6 +18,6 @@ class CommentsController extends Controller
     {
         CommentsModel::pushMassage();
 
-        $this->redirect();
+        Route::redirect();
     }
 }

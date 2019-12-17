@@ -17,6 +17,6 @@ class RegisterController extends Controller
     public function add()
     {
         RegisterModel::registerUser();
-        $this->redirect();
+        Route::redirect();
     }
 }
