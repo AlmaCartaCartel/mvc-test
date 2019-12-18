@@ -14,12 +14,12 @@ class AuthModel extends Model
         $login = $_POST['login'];
         $password = $_POST['password'];
 
+
         $db = DataBase::db_connect();
 
-        $query = mysqli_query($db, "SELECT * FROM `users` WHERE `login` = $login ") or  false;
+        $query = mysqli_query($db, "SELECT * FROM `users` WHERE `login` = '$login' ") or  false;
         if ($query){
             $user =  mysqli_fetch_assoc($query);
-
             return $password == $user['password']? $user : false;
         }
     }

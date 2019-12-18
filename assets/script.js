@@ -1,7 +1,8 @@
-var comment = document.querySelectorAll('._comment');
-for (let i = 0; i < comment.length; i++){
+var answers = document.querySelectorAll('a.answer');
+var hidens = document.querySelectorAll('input._comment');
 
-    comment[i].nextElementSibling.addEventListener('click', function (e) {
-        document.querySelector('.comment_id').value = comment[i].value;
+for (let i = 0; i < answers.length; i++){
+    answers[i].addEventListener('click', function () {
+        document.querySelector('.comment_id').value = hidens[i].value;
     })
 }

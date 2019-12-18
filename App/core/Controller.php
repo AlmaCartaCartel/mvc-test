@@ -13,7 +13,7 @@ class Controller
         $_SESSION[$status] = $value;
     }
 
-    public function view($view, $data){
+    public function view($view, $data = null){
         View::generate($view, $data);
     }
 

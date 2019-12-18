@@ -11,12 +11,13 @@ class RegisterController extends Controller
 {
     public function index()
     {
-        View::generate('register');
+        $this->view('register');
     }
 
     public function add()
     {
         RegisterModel::registerUser();
+
         Route::redirect();
     }
 }

@@ -10,7 +10,7 @@ class AuthController extends Controller
 {
     public function index()
     {
-        $this->view->generate('login');
+        $this->view('login');
     }
 
     public function login()
@@ -19,12 +19,14 @@ class AuthController extends Controller
 
         if (!$user){
             $this->session('status', 'Нет такого пользователя!');
-            Route::redirect('auth');
+
+            $this->view('login');
         }else{
             $this->session('status', 'Вы авторизировались!');
+
             $this->session('auth', $user);
 
-            Route::redirect('home');
+            $this->redirect('home');
         }
     }
 

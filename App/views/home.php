@@ -4,52 +4,49 @@ include 'layout/header.php'; ?>
 <div>
     <h1>Home page</h1>
     <div>
+        <?php if($_SESSION['status']):?>
+            <div class="alert alert-dark" role="alert">
+                <?= $_SESSION['status'] ?>
+            </div>
+        <?php unset($_SESSION['status']);
+            endif;
+        ?>
         <h3>Comments</h3>
-<!--        <pre>-->
-<!--          --><?php
-//          var_dump($data[2]);
-//          die();
-//          ?>
-<!--        </pre>-->
-
-        <?php
-            foreach ($data[0] as $comment): ?>
-                <div class="comment">
-                    <h3><?= $comment[3]?></h3>
-                    <p><?= $comment[1]?></p>
-                    <input type="hidden" class="_comment" value="<?= $comment[0]?>">
-                    <a href="#form">ответить</a>
+        <pre>
+<!--        --><?php
+//         var_dump($data);
+//       die();
+//         ?>
+        </pre>
+            <?php
+            function renderComennts($data, $margin = 0){
+                foreach ($data as $comment):
+                ?>
+                <div class="comment" style="margin-left: <?= $margin ?>px">
+                    <h3 class="author"><?= $comment['user_name']?></h3>
+                    <p><?= $comment['massage']?></p>
+                    <span>
+                        <input type="hidden" class="_comment" value="<?= $comment['id']?>">
+                        <a href="#form" class="answer">ответить</a>
+                    </span>
+                    <span><?= $comment['date']?></span>
                 </div>
+                <?php
+                if (!empty($comment['answers'])){
+                    renderComennts($comment['answers'], $margin + 30);
+                }
+                endforeach;
+                };
+            ?>
 
-                <?php foreach ($data[1] as $comment_child):
-                    if ($comment[0] == $comment_child[6]):?>
-                    <div class="comment_child_1">
-                        <h4><?= $comment[3]?></h4>
-                        <p><?= $comment_child[1]?></p>
-                        <input type="hidden" class="_comment" value="<?= $comment_child[0]?>">
-                        <a href="#form">ответить</a>
-                    </div>
+        <?php renderComennts($data); ?>
 
-                        <?php foreach ($data[1] as $comment_child_two):
-                            if ($comment_child[0] == $comment_child_two[6]):?>
-                                <div class="comment_child_2">
-                                    <h4><?= $comment[3]?></h4>
-                                    <p><?= $comment_child_two[1]?></p>
-                                </div>
-                            <?php endif;
-                        endforeach; ?>
-
-                    <?php endif;
-                 endforeach; ?>
-
-            <?php endforeach; ?>
             <?php if ($_SESSION['auth']):?>
                 <form action="/comments/add" method="post" class="comment" id="form">
                     <h4> Message </h4>
 
-
                     <input type="hidden" name="comment_id" value='null' class="comment_id">
-                    <textarea name="message" id="" cols="30" rows="10" ></textarea><br>
+                    <textarea name="message" id="textarea" cols="30" rows="10"></textarea><br>
 
                     <button type="submit" class="btn btn-success"> Submit</button>
                 </form>

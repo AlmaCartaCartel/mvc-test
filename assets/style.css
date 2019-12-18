@@ -16,13 +16,8 @@ textarea{
     width: 500px;
     height: 180px;
 }
-div.comment_child_1{
+div.answer{
     margin-left: 30px;
-    border: 1px solid black;
-    padding: 20px 10px 0 5px;
-}
-div.comment_child_2{
-    margin-left: 60px;
     border: 1px solid black;
     padding: 20px 10px 0 5px;
 }
