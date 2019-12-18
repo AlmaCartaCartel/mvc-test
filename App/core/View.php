@@ -22,6 +22,6 @@ class View
         внутри которого будет встраиваться вид
         для отображения контента конкретной страницы.
         */
-        include 'W:\domains\test2\App\views/' . $view . '.php';
+        include str_replace('core',"views\\{$view}.php",__DIR__);
     }
 }

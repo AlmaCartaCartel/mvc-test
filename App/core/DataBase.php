@@ -8,7 +8,9 @@ class DataBase
 {
     static function db_connect()
     {
-        return mysqli_connect('localhost', 'root', '', 'test');
+        require_once 'data-base.config.php';
+
+        return mysqli_connect($host, $login, $password , $db_name);
     }
 
 }
