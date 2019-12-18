@@ -1,23 +1,20 @@
 <?php
-session_start();
 
 use core\Controller;
-use core\Route;
-use models\CommentsModel;
+
 
 class CommentsController extends Controller
 {
     public function index()
     {
-        $comments = CommentsModel::getComments();
-
+        $comments = $this->model->getComments();
         $this->view('home', $comments);
     }
 
     public function add()
     {
-        CommentsModel::pushMassage();
+        $this->model->pushMassage();
 
-        Route::redirect();
+        $this->redirect();
     }
 }

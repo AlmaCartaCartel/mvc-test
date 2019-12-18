@@ -7,7 +7,7 @@ class Route
     public static function start()
     {
         // контроллер и действие по умолчанию
-        $controller_name = 'Home';
+        $controller_name = 'Comments';
         $action_name = 'index';
 
         $routes = explode('/', $_SERVER['REQUEST_URI']);
@@ -31,11 +31,7 @@ class Route
         // подцепляем файл с классом модели (файла модели может и не быть)
 
         $model_file = ucfirst($model_name).'.php';
-        $model_path = "app/models/".$model_file;
-        if(file_exists($model_path))
-        {
-            include "app/models/".$model_file;
-        }
+        $model_path = "models\\".$model_name;
 
         // подцепляем файл с классом контроллера
         $controller_file = ucfirst($controller_name) .'.php';
@@ -54,6 +50,7 @@ class Route
         }
         // создаем контроллер
         $controller = new $controller_name;
+        $controller-> model = new $model_path();
         $action = $action_name;
 
         if(method_exists($controller, $action))
@@ -80,8 +77,8 @@ class Route
 
     }
 
-    static function redirect($page = '')
+    static function redirect($route = '')
     {
-        return header("Location: /{$page}");
+        return header("Location: /{$route}");
     }
 }

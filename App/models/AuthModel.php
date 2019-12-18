@@ -9,18 +9,24 @@ use core\Model;
 
 class AuthModel extends Model
 {
-    public static function login()
+    public $user;
+
+    public function login()
     {
         $login = $_POST['login'];
         $password = $_POST['password'];
 
 
-        $db = DataBase::db_connect();
+        $db = $this->connect();
 
         $query = mysqli_query($db, "SELECT * FROM `users` WHERE `login` = '$login' ") or  false;
         if ($query){
             $user =  mysqli_fetch_assoc($query);
-            return $password == $user['password']? $user : false;
+            $this->user = $password == $user['password']? $user : false;
         }
+    }
+    public function dd()
+    {
+        die('ok');
     }
 }

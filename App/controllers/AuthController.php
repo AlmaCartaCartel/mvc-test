@@ -1,9 +1,6 @@
 <?php
-session_start();
+
 use core\Controller;
-use core\Route;
-use core\View;
-use models\AuthModel;
 
 
 class AuthController extends Controller
@@ -15,7 +12,8 @@ class AuthController extends Controller
 
     public function login()
     {
-        $user = AuthModel::login();
+        $this->model->login();
+        $user = $this->model->user;
 
         if (!$user){
             $this->session('status', 'Нет такого пользователя!');
@@ -23,10 +21,9 @@ class AuthController extends Controller
             $this->view('login');
         }else{
             $this->session('status', 'Вы авторизировались!');
-
             $this->session('auth', $user);
 
-            $this->redirect('home');
+            $this->redirect();
         }
     }
 

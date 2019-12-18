@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 include 'layout/header.php'; ?>
 <div>
     <h1>Home page</h1>

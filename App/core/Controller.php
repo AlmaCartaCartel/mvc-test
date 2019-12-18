@@ -1,8 +1,6 @@
 <?php
 namespace core;
 
-session_start();
-
 class Controller
 {
     public $model;
@@ -17,7 +15,7 @@ class Controller
         View::generate($view, $data);
     }
 
-    public function redirect($route)
+    public function redirect($route = '')
     {
         Route::redirect($route);
     }

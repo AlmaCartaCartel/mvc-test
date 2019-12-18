@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 include 'layout/header.php'; ?>
     <form method="post" action="/register/add" class="form">
         <div class="form-group">
