@@ -1,4 +1,4 @@
-gi
+
 <!doctype html>
 
 <html lang="en">
@@ -20,7 +20,7 @@ gi
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-                <li class="nav-item active">
+                <li class="navitem active">
                     <a class="nav-link" href="/">Home</a>
                 </li>
                 <?php if(!$_SESSION['auth']):?>

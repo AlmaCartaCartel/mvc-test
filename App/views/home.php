@@ -24,12 +24,12 @@ include 'layout/header.php'; ?>
                 ?>
                 <div class="comment" style="margin-left: <?= $margin ?>px">
                     <h3 class="author"><?php echo $comment['user_name']?></h3>
-                    <p><?= $comment['massage']?></p>
+                    <p><?php echo $comment['massage']?></p>
                     <span>
                         <input type="hidden" class="_comment" value="<?php echo $comment['id']?>">
                         <a href="#form" class="answer">ответить</a>
                     </span>
-                    <span><?= $comment['date']?></span>
+                    <span><?php echo $comment['date']?></span>
                 </div>
                 <?php
                 if (!empty($comment['answers'])){
