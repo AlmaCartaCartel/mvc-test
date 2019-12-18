@@ -23,10 +23,10 @@ include 'layout/header.php'; ?>
                 foreach ($data as $comment):
                 ?>
                 <div class="comment" style="margin-left: <?= $margin ?>px">
-                    <h3 class="author"><?= $comment['user_name']?></h3>
+                    <h3 class="author"><?php echo $comment['user_name']?></h3>
                     <p><?= $comment['massage']?></p>
                     <span>
-                        <input type="hidden" class="_comment" value="<?= $comment['id']?>">
+                        <input type="hidden" class="_comment" value="<?php echo $comment['id']?>">
                         <a href="#form" class="answer">ответить</a>
                     </span>
                     <span><?= $comment['date']?></span>
