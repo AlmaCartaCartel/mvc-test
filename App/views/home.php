@@ -6,7 +6,7 @@ include 'layout/header.php'; ?>
     <div>
         <?php if($_SESSION['status']):?>
             <div class="alert alert-dark" role="alert">
-                <?= $_SESSION['status'] ?>
+                <?php echo $_SESSION['status'] ?>
             </div>
         <?php unset($_SESSION['status']);
             endif;
