@@ -6,9 +6,9 @@ use core\Model;
 
 class RegisterModel extends Model
 {
-    public function registerUser()
+    public static function registerUser()
     {
-        $db_connect = $this->connect();
+        $db_connect = DataBase::db_connect();
 
         $user_name = $_POST['name'];
         $user_email = $_POST['email'];

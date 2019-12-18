@@ -1,7 +1,7 @@
 <?php
 
 use core\Controller;
-
+use models\AuthModel;
 
 class AuthController extends Controller
 {
@@ -12,8 +12,7 @@ class AuthController extends Controller
 
     public function login()
     {
-        $this->model->login();
-        $user = $this->model->user;
+        $user = AuthModel::login();
 
         if (!$user){
             $this->session('status', 'Нет такого пользователя!');

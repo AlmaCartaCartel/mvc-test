@@ -1,19 +1,20 @@
 <?php
 
 use core\Controller;
+use models\CommentsModel;
 
 
 class CommentsController extends Controller
 {
     public function index()
     {
-        $comments = $this->model->getComments();
+        $comments = CommentsModel::getComments();
         $this->view('home', $comments);
     }
 
     public function add()
     {
-        $this->model->pushMassage();
+        CommentsModel::pushMassage();
 
         $this->redirect();
     }

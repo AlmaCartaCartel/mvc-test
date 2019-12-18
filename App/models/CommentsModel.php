@@ -6,9 +6,9 @@ use core\Model;
 
 class CommentsModel extends Model
 {
-    public  function pushMassage()
+    public static function pushMassage()
     {
-        $db_comment = $this->connect();
+        $db_comment = DataBase::db_connect();
 
         $mes = $_POST['message'];
         $id = $_POST['comment_id'];
@@ -18,9 +18,9 @@ class CommentsModel extends Model
         mysqli_query($db_comment,"INSERT INTO `comments` (`massage`, `user_id`, `user_name`,`comment_id`) VALUES ( '$mes' , '$user_id','$user_name', $id)");
     }
 
-    public  function getComments()
+    public static function getComments()
     {
-        $db = $this->connect();
+        $db = DataBase::db_connect();
         $query = mysqli_query($db, "SELECT * FROM `comments` ");
 
         $comments =  mysqli_fetch_all($query, MYSQLI_ASSOC);

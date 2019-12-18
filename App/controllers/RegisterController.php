@@ -1,6 +1,7 @@
 <?php
 
 use core\Controller;
+use models\RegisterModel;
 
 class RegisterController extends Controller
 {
@@ -11,7 +12,7 @@ class RegisterController extends Controller
 
     public function add()
     {
-        $this->model->registerUser();
+        RegisterModel::registerUser();
         $this->redirect('auth');
     }
 }
