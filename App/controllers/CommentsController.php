@@ -14,9 +14,9 @@ class CommentsController extends Controller
 
     public function add()
     {
-        CommentsModel::pushMassage();
+        $comment = CommentsModel::pushMassage();
+        die(json_encode($comment));
 
-        $this->redirect();
     }
 
     public function getComments()

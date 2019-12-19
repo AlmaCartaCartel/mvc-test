@@ -8,29 +8,55 @@ async function getComments() {
     }
     return response.json();
 }
-
 let form = document.getElementById('form');
+
+function addComment() {
+    const comment = document.createElement('li');
+    comment.classList.add('comment')
+
+    const author = document.createElement('h3');
+    author.innerHTML = 'Author';
+    author.classList.add('author');
+
+    const massage = document.createElement('p');
+    massage.innerHTML = document.getElementById('textarea').value;
+
+    const hiden = document.querySelector('.comment_id');
+    let id = document.querySelector('.com'+hiden.value );
+
+    comment.appendChild(author);
+    comment.appendChild(massage);
+
+    id = id.lastChild;
+    id.appendChild(comment);
+    console.log(comment, id, hiden.value);
+}
 
 if (form !== null){
     btn = document.getElementById('submit')
-    form.addEventListener('submit', function (event) {
+    form.addEventListener('submit',  async function (event) {
         event.preventDefault();
-        document.getElementById('comments').innerHTML = '';
-        fetch('/comments/add',{
+        let response = await fetch('/comments/add',{
             method: 'POST',
             body: new FormData(this)
         });
-
-        getComments().then(
-            res => {
-                renderComments(res);
-            }
-        ).then(() => applyPostId());
+        if (!response.ok){
+            throw new Error(
+                `Не удалось запросить данные по адресу`
+            );
+        }
+        await console.log(response.json());
     });
 }
 
 
 function createComment(arr, margin) {
+    const li = document.createElement('li');
+    li.classList.add( 'com' + arr.id);
+    const ul = document.createElement('ul');
+    ul.style.listStyle = 'none';
+    ul.classList.add('answers');
+
     const div = document.createElement('div');
     div.classList.add('comment');
     div.style.marginLeft = margin +'px';
@@ -60,25 +86,27 @@ function createComment(arr, margin) {
     div.appendChild(btn);
     div.appendChild(date);
 
-    return div;
+    li.appendChild(div);
+    li.appendChild(ul);
+
+    console.log(li.lastChild);
+    return li;
 }
 
-function renderComments(arr, margin = 0){
-    let container = document.getElementById('comments');
-    for (let comment of arr){
 
-        container.appendChild(createComment(comment, margin));
+
+function renderComments(arr, margin = 0, container = null){
+    if (container === null){
+        container = document.getElementById('comments');
+    }
+    for (let comment of arr){
+        let com = createComment(comment, margin);
+        container.appendChild(com);
         if (comment.answers.length > 0){
-            renderComments(comment.answers, margin + 30);
+            renderComments(comment.answers, margin + 30, com.lastChild);
         }
     }
 }
-
-getComments().then(
-    res => {
-        renderComments(res);
-    }
-).then(() => applyPostId());
 
 function applyPostId() {
     const form = document.querySelector('.comment_id');
@@ -90,4 +118,10 @@ function applyPostId() {
         })
     }
 }
-
+let arr;
+getComments().then(
+    res => {
+        arr = res;
+        renderComments(res);
+    }
+).then(() => applyPostId());

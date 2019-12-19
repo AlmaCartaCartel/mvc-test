@@ -12,15 +12,17 @@ include 'layout/header.php';
             endif;
         ?>
         <h3>Comments</h3>
-            <div id="comments">
+            <div>
+                <ul id="comments" style="list-style: none">
 
+                </ul>
             </div>
 
             <?php if (isset($_SESSION['auth'])):?>
                 <form action="" method="post" class="comment" id="form">
                     <h4> Message </h4>
 
-                    <input type="hidden" name="comment_id" value='null' class="comment_id">
+                    <input type="hidden" name="comment_id" value='null' class="comment_id" >
                     <textarea name="message" id="textarea" cols="30" rows="10"></textarea><br>
 
                     <button id="submit"  class="btn btn-success submit"> Submit</button>

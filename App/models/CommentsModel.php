@@ -16,6 +16,9 @@ class CommentsModel extends Model
         $user_name = $_SESSION['auth']['name'];
 
         mysqli_query($db_comment,"INSERT INTO `comments` (`massage`, `user_id`, `user_name`,`comment_id`) VALUES ( '$mes' , '$user_id','$user_name', $id)");
+
+        $comment = mysqli_query($db_comment, "SELECT * FROM comments ORDER BY id DESC LIMIT 1");
+        return mysqli_fetch_assoc($comment);
     }
 
     public static function getComments()
@@ -28,6 +31,7 @@ class CommentsModel extends Model
         return self::transformData($comments);
 
     }
+
 
     public static function transformData($comments, $id = null)
     {
