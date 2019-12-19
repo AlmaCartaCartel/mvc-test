@@ -11,7 +11,7 @@ async function getComments() {
 
 let form = document.getElementById('form');
 
-form == null? '' : form.addEventListener('submit', function (event) {
+form == null ? '' : form.addEventListener('submit', function (event) {
     document.getElementById('comments').innerHTML = '';
 
     let promise = fetch('/comments/add',{
