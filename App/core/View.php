@@ -6,12 +6,9 @@ class View
 {
     public static function generate( $view, $data = null)
     {
-            // преобразуем элементы массива в переменные
-//        session_start();
-//        $_SESSION['comments'] = $data;
         if(is_array($data)) {
 
-            // преобразуем элементы массива в переменные
+
             extract($data);
         }
         /*
