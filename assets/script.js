@@ -10,22 +10,34 @@ async function getComments() {
 }
 
 let form = document.getElementById('form');
+if (!form == null){
 
-form == null ? '' : form.addEventListener('submit', function (event) {
-    document.getElementById('comments').innerHTML = '';
+}
+if (form !== null){
+    form.addEventListener('submit', function (event) {
+        document.getElementById('comments').innerHTML = '';
 
-    let promise = fetch('/comments/add',{
-        method: 'POST',
-        body: new FormData(this)
+        let response = fetch('/comments/add',{
+            method: 'POST',
+            body: new FormData(this)
+        });
+        if (!response.ok){
+            throw new Error(
+                `Не удалось отправить данные по адресу`
+            );
+        }
+
+        getComments()
+            .then(
+                res => renderComments(res))
+            .then(
+                () => applyPostId());
+        event.preventDefault();
+
+        document.getElementById('textarea').value = '';
     });
+}
 
-    getComments().then(
-        res => renderComments(res)
-    ).then(() => applyPostId());
-    event.preventDefault();
-
-    document.getElementById('textarea').value = '';
-});
 
 function createComment(arr, margin) {
     const div = document.createElement('div');
