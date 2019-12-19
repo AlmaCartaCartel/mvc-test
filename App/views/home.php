@@ -1,6 +1,6 @@
 <?php
-
-include 'layout/header.php'; ?>
+include 'layout/header.php';
+?>
 <div>
     <h1>Home page</h1>
     <div>
@@ -12,43 +12,18 @@ include 'layout/header.php'; ?>
             endif;
         ?>
         <h3>Comments</h3>
-        <pre>
-<!--        --><?php
-//         var_dump($data);
-//       die();
-//         ?>
-        </pre>
-            <?php
-            function renderComennts($data, $margin = 0){
-                foreach ($data as $comment):
-                ?>
-                <div class="comment" style="margin-left: <?= $margin ?>px">
-                    <h3 class="author"><?php echo $comment['user_name']?></h3>
-                    <p><?php echo $comment['massage']?></p>
-                    <span>
-                        <input type="hidden" class="_comment" value="<?php echo $comment['id']?>">
-                        <a href="#form" class="answer">ответить</a>
-                    </span>
-                    <span><?php echo $comment['date']?></span>
-                </div>
-                <?php
-                if (!empty($comment['answers'])){
-                    renderComennts($comment['answers'], $margin + 30);
-                }
-                endforeach;
-                };
-            ?>
+            <div id="comments">
 
-        <?php renderComennts($data); ?>
+            </div>
 
             <?php if ($_SESSION['auth']):?>
-                <form action="/comments/add" method="post" class="comment" id="form">
+                <form action="" method="post" class="comment" id="form">
                     <h4> Message </h4>
 
                     <input type="hidden" name="comment_id" value='null' class="comment_id">
                     <textarea name="message" id="textarea" cols="30" rows="10"></textarea><br>
 
-                    <button type="submit" class="btn btn-success"> Submit</button>
+                    <button type="submit" class="btn btn-success submit"> Submit</button>
                 </form>
             <?php else: ?>
                 <div class="alert alert-dark" role="alert">

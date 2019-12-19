@@ -18,4 +18,11 @@ class CommentsController extends Controller
 
         $this->redirect();
     }
+
+    public function getComments()
+    {
+        $comments = json_encode(CommentsModel::getComments());
+
+        die($comments);
+    }
 }
