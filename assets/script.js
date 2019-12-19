@@ -10,31 +10,22 @@ async function getComments() {
 }
 
 let form = document.getElementById('form');
-if (!form == null){
 
-}
 if (form !== null){
+    btn = document.getElementById('submit')
     form.addEventListener('submit', function (event) {
+        event.preventDefault();
         document.getElementById('comments').innerHTML = '';
-
-        let response = fetch('/comments/add',{
+        fetch('/comments/add',{
             method: 'POST',
             body: new FormData(this)
         });
-        if (!response.ok){
-            throw new Error(
-                `Не удалось отправить данные по адресу`
-            );
-        }
 
-        getComments()
-            .then(
-                res => renderComments(res))
-            .then(
-                () => applyPostId());
-        event.preventDefault();
-
-        document.getElementById('textarea').value = '';
+        getComments().then(
+            res => {
+                renderComments(res);
+            }
+        ).then(() => applyPostId());
     });
 }
 

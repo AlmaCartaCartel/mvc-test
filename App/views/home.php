@@ -23,7 +23,7 @@ include 'layout/header.php';
                     <input type="hidden" name="comment_id" value='null' class="comment_id">
                     <textarea name="message" id="textarea" cols="30" rows="10"></textarea><br>
 
-                    <button type="submit" class="btn btn-success submit"> Submit</button>
+                    <button id="submit"  class="btn btn-success submit"> Submit</button>
                 </form>
             <?php else: ?>
                 <div class="alert alert-dark" role="alert">
