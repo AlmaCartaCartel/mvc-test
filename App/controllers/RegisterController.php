@@ -12,7 +12,12 @@ class RegisterController extends Controller
 
     public function add()
     {
-        RegisterModel::registerUser();
+        $result = RegisterModel::registerUser();
+        if ($result){
+            $this->session('status', $result['status']);
+            $this->redirect('register');
+            exit;
+        }
         $this->redirect('auth');
     }
 }
