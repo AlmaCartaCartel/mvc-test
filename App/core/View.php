@@ -19,6 +19,6 @@ class View
         внутри которого будет встраиваться вид
         для отображения контента конкретной страницы.
         */
-        include VIEWS_PATH.$view.'.php';
+        include str_replace('\\', '/', VIEWS_PATH.$view.'.php') ;
     }
 }

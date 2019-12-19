@@ -38,7 +38,7 @@ class Route
         $controller_path = "app/controllers/".$controller_file;
         if(file_exists($controller_path))
         {
-            include "app/controllers/".$controller_file;
+            include str_replace('\\', '/', "app/controllers/".$controller_file);
         }
         else
         {
