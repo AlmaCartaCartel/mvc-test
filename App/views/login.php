@@ -3,7 +3,7 @@
 include 'layout/header.php'; ?>
 
     <form method="post" action="/auth/login" class="form">
-        <?php if($_SESSION['status']):?>
+        <?php if(isset($_SESSION['status'])):?>
             <div class="alert alert-dark" role="alert">
                 <?php echo $_SESSION['status'] ?>
             </div>

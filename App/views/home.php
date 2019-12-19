@@ -4,7 +4,7 @@ include 'layout/header.php';
 <div>
     <h1>Home page</h1>
     <div>
-        <?php if(!empty($_SESSION['status'])):?>
+        <?php if(isset($_SESSION['status'])):?>
             <div class="alert alert-dark" role="alert">
                 <?php echo $_SESSION['status'] ?>
             </div>
@@ -16,7 +16,7 @@ include 'layout/header.php';
 
             </div>
 
-            <?php if (!empty($_SESSION['auth'])):?>
+            <?php if (isset($_SESSION['auth'])):?>
                 <form action="" method="post" class="comment" id="form">
                     <h4> Message </h4>
 

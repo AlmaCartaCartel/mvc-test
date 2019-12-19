@@ -23,7 +23,7 @@
                 <li class="navitem active">
                     <a class="nav-link" href="/">Home</a>
                 </li>
-                <?php if(!empty($_SESSION['auth'])):?>
+                <?php if(empty($_SESSION['auth'])):?>
                     <li class="nav-item">
                         <a class="nav-link" href="/register">Register</a>
                     </li>
