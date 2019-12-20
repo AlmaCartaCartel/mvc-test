@@ -10,21 +10,22 @@ async function getComments() {
 }
 
 function addComment(comment){
-    const allComments = document.querySelectorAll('._comment');
+    const allAnswers = document.querySelectorAll('.answers');
 
     comment.then(
         res => {
             if (res.comment_id === null){
                 document.getElementById('comments').appendChild(createComment(res))
             }else{
-                for (let elem of allComments){
-                    if (res.comment_id == elem.value){
-                        elem.nextElementSibling.appendChild(createComment(res, +elem.dataset.margin + 30));
-                        applyPostId();
+                for (let elem of allAnswers){
+                    if (res.comment_id === elem.dataset.commentid){
+                        elem.appendChild(createComment(res, +elem.dataset.margin + 30));
                     }
                 }
             }
         }
+    ).then(
+        () => applyPostId()
     )
 }
 
@@ -58,13 +59,10 @@ function createComment(comment, margin) {
             <button class="answer" data-commentid ="${comment.id}">answer</button>
             <span>${comment.date}</span>
         </div>
-        <input type="hidden" name="" class="_comment" value="${comment.id}" data-margin="${margin}">
-        <ul class="answers" style="list-style: none">
-<!--            answers-->
+        <ul class="answers" style="list-style: none" data-margin="${margin}" data-commentid="${comment.id}">
         </ul>`;
 
     li.innerHTML = Comment;
-    li.classList.add('comment_container');
     return li;
 }
 
@@ -76,7 +74,7 @@ function renderComments(arr, margin = 0, container = null){
         let com = createComment(comment, margin);
         container.appendChild(com);
         if (comment.answers.length > 0){
-            renderComments(comment.answers, margin + 30, com.lastChild);
+            renderComments(comment.answers, margin + 30, com.querySelector('ul'));
         }
     }
 }
