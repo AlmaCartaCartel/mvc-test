@@ -36,7 +36,13 @@ function addComment(comment){
 }
 function createComment(comment, bool = false) {
     const li = document.createElement('li');
-    const answer = `<button class="answer btn btn-secondary" data-commentid ="${comment.id}">answer</button>`;
+    let answer = `<button 
+                        class="answer btn btn-secondary" 
+                        data-parent="${comment.parent == null ? 1: +comment.parent}"
+                        data-commentid ="${comment.id}">answer</button>`;
+    if (+document.getElementById('comments').dataset.nesting == comment.parent){
+        answer = '';
+    }
 
     const isNewComment = `<span class="badge badge-success">New</span>`;
     const auth = document.getElementById('comments').dataset.auth;
@@ -46,13 +52,13 @@ function createComment(comment, bool = false) {
             <h3 class="author">${comment.user_name} 
                 ${bool ? isNewComment: ''}
             </h3>
-            <p>${comment.massage}</p>
+            <pre>${comment.massage}</pre>
             <div class="d-flex justify-content-between">
                 ${auth === '1'? answer: ''}
                 <span>${comment.date}</span>   
             </div>
         </div>
-        <ul class="answers " style="list-style: none; margin-left: 30px" data-commentid="${comment.id}">
+        <ul class="answers " style="list-style: none; margin-left: 30px" data-commentid="${comment.id}" >
         </ul>`;
 
     li.innerHTML = Comment;
@@ -73,12 +79,13 @@ function renderComments(arr, container = null){
 }
 
 function applyPostId() {
-    const form = document.querySelector('.comment_id');
+    const comment_id = document.querySelector('.comment_id');
+    const parent_lvl = document.querySelector('.parent_lvl');
     const answers = document.querySelectorAll('.answer');
     for (let i = 0; i < answers.length; i++){
         answers[i].addEventListener('click', function () {
-            form.value = this.dataset.commentid;
-
+            comment_id.value = this.dataset.commentid;
+            parent_lvl.value = +this.dataset.parent + 1;
             const blockID = 'form';
             document.getElementById(blockID).scrollIntoView({
                 behavior: 'smooth',

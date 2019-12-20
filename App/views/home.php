@@ -13,7 +13,7 @@ include 'layout/header.php';
         ?>
         <h3>Comments</h3>
             <div>
-                <ul id="comments" style="list-style: none" data-auth="<?php echo isset($_SESSION['auth'])?>">
+                <ul id="comments" style="list-style: none" data-auth="<?php echo isset($_SESSION['auth'])?>" data-nesting="<?php echo NESTING_COMMENTS; ?>">
 
                 </ul>
             </div>
@@ -22,6 +22,7 @@ include 'layout/header.php';
                 <form action="" method="post" class="comment" id="form">
                     <h4> Message </h4>
 
+                    <input type="hidden" name="parent" value='null' class="parent_lvl" >
                     <input type="hidden" name="comment_id" value='null' class="comment_id" >
                     <textarea name="message" id="textarea" class="form-control" cols="30" rows="3" placeholder="Введите комментарий"></textarea><br>
 
