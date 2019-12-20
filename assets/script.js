@@ -8,29 +8,27 @@ async function getComments() {
     }
     return response.json();
 }
-let form = document.getElementById('form');
 
-function addComment() {
-    const comment = document.createElement('li');
-    comment.classList.add('comment')
+function addComment(comment){
+    const allComments = document.querySelectorAll('._comment');
 
-    const author = document.createElement('h3');
-    author.innerHTML = 'Author';
-    author.classList.add('author');
-
-    const massage = document.createElement('p');
-    massage.innerHTML = document.getElementById('textarea').value;
-
-    const hiden = document.querySelector('.comment_id');
-    let id = document.querySelector('.com'+hiden.value );
-
-    comment.appendChild(author);
-    comment.appendChild(massage);
-
-    id = id.lastChild;
-    id.appendChild(comment);
-    console.log(comment, id, hiden.value);
+    comment.then(
+        res => {
+            if (res.comment_id === null){
+                document.getElementById('comments').appendChild(createComment(res))
+            }else{
+                for (let elem of allComments){
+                    if (res.comment_id == elem.value){
+                        elem.nextElementSibling.appendChild(createComment(res, +elem.dataset.margin + 30));
+                        applyPostId();
+                    }
+                }
+            }
+        }
+    )
 }
+
+let form = document.getElementById('form');
 
 if (form !== null){
     btn = document.getElementById('submit')
@@ -45,55 +43,30 @@ if (form !== null){
                 `Не удалось запросить данные по адресу`
             );
         }
-        await console.log(response.json());
+        await addComment(response.json())
     });
 }
 
 
-function createComment(arr, margin) {
+function createComment(comment, margin) {
+
     const li = document.createElement('li');
-    li.classList.add( 'com' + arr.id);
-    const ul = document.createElement('ul');
-    ul.style.listStyle = 'none';
-    ul.classList.add('answers');
+    const Comment = `
+        <div class="comment" style="margin-left: ${margin}px" ">
+            <h3 class="author">${comment.user_name}</h3>
+            <p>${comment.massage}</p>
+            <button class="answer" data-commentid ="${comment.id}">answer</button>
+            <span>${comment.date}</span>
+        </div>
+        <input type="hidden" name="" class="_comment" value="${comment.id}" data-margin="${margin}">
+        <ul class="answers" style="list-style: none">
+<!--            answers-->
+        </ul>`;
 
-    const div = document.createElement('div');
-    div.classList.add('comment');
-    div.style.marginLeft = margin +'px';
-
-    const author = document.createElement('h3');
-    author.innerHTML = arr.user_name;
-    author.classList.add('author');
-
-    const massage = document.createElement('p');
-    massage.innerHTML = arr.massage;
-
-    const inp = document.createElement('input');
-    inp.type = 'hidden';
-    inp.classList.add('_comment');
-    inp.value = arr.id;
-
-    const btn = document.createElement('button');
-    btn.innerHTML = 'ответить';
-    btn.classList.add( 'answer');
-
-    const date = document.createElement('span');
-    date.innerHTML = arr.date;
-
-    div.appendChild(author);
-    div.appendChild(massage);
-    div.appendChild(inp);
-    div.appendChild(btn);
-    div.appendChild(date);
-
-    li.appendChild(div);
-    li.appendChild(ul);
-
-    console.log(li.lastChild);
+    li.innerHTML = Comment;
+    li.classList.add('comment_container');
     return li;
 }
-
-
 
 function renderComments(arr, margin = 0, container = null){
     if (container === null){
@@ -111,10 +84,9 @@ function renderComments(arr, margin = 0, container = null){
 function applyPostId() {
     const form = document.querySelector('.comment_id');
     const answers = document.querySelectorAll('.answer');
-    const hidens = document.querySelectorAll('._comment')
     for (let i = 0; i < answers.length; i++){
         answers[i].addEventListener('click', function () {
-            form.value = hidens[i].value;
+            form.value = this.dataset.commentid;
         })
     }
 }
