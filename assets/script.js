@@ -52,11 +52,13 @@ if (form !== null){
 function createComment(comment, margin) {
 
     const li = document.createElement('li');
+    const answer = `<button class="answer" data-commentid ="${comment.id}">answer</button>`;
+    const bollean = document.getElementById('comments').dataset.auth;
     const Comment = `
         <div class="comment" style="margin-left: ${margin}px" ">
             <h3 class="author">${comment.user_name}</h3>
             <p>${comment.massage}</p>
-            <button class="answer" data-commentid ="${comment.id}">answer</button>
+            ${bollean === '1'? answer: ''}
             <span>${comment.date}</span>
         </div>
         <ul class="answers" style="list-style: none" data-margin="${margin}" data-commentid="${comment.id}">

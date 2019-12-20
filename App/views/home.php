@@ -13,7 +13,7 @@ include 'layout/header.php';
         ?>
         <h3>Comments</h3>
             <div>
-                <ul id="comments" style="list-style: none">
+                <ul id="comments" style="list-style: none" data-auth="<?php echo isset($_SESSION['auth'])?>">
 
                 </ul>
             </div>
