@@ -19,7 +19,13 @@ function addComment(comment){
             }else{
                 for (let elem of allAnswers){
                     if (res.comment_id === elem.dataset.commentid){
-                        elem.appendChild(createComment(res, +elem.dataset.margin + 30));
+                        const com = createComment(res, true)
+                        elem.appendChild(com);
+
+                        com.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        })
                     }
                 }
             }
@@ -28,6 +34,65 @@ function addComment(comment){
         () => applyPostId()
     )
 }
+function createComment(comment, bool = false) {
+    const li = document.createElement('li');
+    const answer = `<button class="answer btn btn-secondary" data-commentid ="${comment.id}">answer</button>`;
+
+    const isNewComment = `<span class="badge badge-success">New</span>`;
+    const auth = document.getElementById('comments').dataset.auth;
+
+    const Comment = `
+        <div class="comment" >
+            <h3 class="author">${comment.user_name} 
+                ${bool ? isNewComment: ''}
+            </h3>
+            <p>${comment.massage}</p>
+            <div class="d-flex justify-content-between">
+                ${auth === '1'? answer: ''}
+                <span>${comment.date}</span>   
+            </div>
+        </div>
+        <ul class="answers " style="list-style: none; margin-left: 30px" data-commentid="${comment.id}">
+        </ul>`;
+
+    li.innerHTML = Comment;
+    return li;
+}
+
+function renderComments(arr, container = null){
+    if (container === null){
+        container = document.getElementById('comments');
+    }
+    for (let comment of arr){
+        let com = createComment(comment);
+        container.appendChild(com);
+        if (comment.answers.length > 0){
+            renderComments(comment.answers,  com.querySelector('ul'));
+        }
+    }
+}
+
+function applyPostId() {
+    const form = document.querySelector('.comment_id');
+    const answers = document.querySelectorAll('.answer');
+    for (let i = 0; i < answers.length; i++){
+        answers[i].addEventListener('click', function () {
+            form.value = this.dataset.commentid;
+
+            const blockID = 'form';
+            document.getElementById(blockID).scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            })
+        })
+    }
+}
+getComments().then(
+    res => {
+        renderComments(res);
+    }
+).then(() => applyPostId());
+
 
 let form = document.getElementById('form');
 
@@ -44,56 +109,8 @@ if (form !== null){
                 `Не удалось запросить данные по адресу`
             );
         }
-        await addComment(response.json())
+        await addComment(response.json());
+        document.getElementById('textarea').value = '';
+
     });
 }
-
-
-function createComment(comment, margin) {
-
-    const li = document.createElement('li');
-    const answer = `<button class="answer" data-commentid ="${comment.id}">answer</button>`;
-    const bollean = document.getElementById('comments').dataset.auth;
-    const Comment = `
-        <div class="comment" style="margin-left: ${margin}px" ">
-            <h3 class="author">${comment.user_name}</h3>
-            <p>${comment.massage}</p>
-            ${bollean === '1'? answer: ''}
-            <span>${comment.date}</span>
-        </div>
-        <ul class="answers" style="list-style: none" data-margin="${margin}" data-commentid="${comment.id}">
-        </ul>`;
-
-    li.innerHTML = Comment;
-    return li;
-}
-
-function renderComments(arr, margin = 0, container = null){
-    if (container === null){
-        container = document.getElementById('comments');
-    }
-    for (let comment of arr){
-        let com = createComment(comment, margin);
-        container.appendChild(com);
-        if (comment.answers.length > 0){
-            renderComments(comment.answers, margin + 30, com.querySelector('ul'));
-        }
-    }
-}
-
-function applyPostId() {
-    const form = document.querySelector('.comment_id');
-    const answers = document.querySelectorAll('.answer');
-    for (let i = 0; i < answers.length; i++){
-        answers[i].addEventListener('click', function () {
-            form.value = this.dataset.commentid;
-        })
-    }
-}
-let arr;
-getComments().then(
-    res => {
-        arr = res;
-        renderComments(res);
-    }
-).then(() => applyPostId());
