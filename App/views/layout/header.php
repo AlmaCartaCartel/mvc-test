@@ -35,7 +35,6 @@
                     <a class="nav-link" href="/auth/out">Out</a>
                 </li>
                 <?php endif;?>
-
             </ul>
         </div>
     </nav>

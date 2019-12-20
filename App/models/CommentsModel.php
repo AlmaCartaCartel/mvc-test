@@ -16,7 +16,7 @@ class CommentsModel extends Model
         $user_name = $_SESSION['auth']['name'];
         $parent = $_POST['parent'];
         if ($parent > NESTING_COMMENTS){
-            exit;
+            return false;
         }
         mysqli_query($db_comment,"INSERT INTO `comments` (`massage`, `user_id`,`parent`,`user_name`,`comment_id`) VALUES ( '$mes' , '$user_id','$parent','$user_name', $id)");
 

@@ -15,7 +15,7 @@ class CommentsController extends Controller
     public function add()
     {
         $comment = CommentsModel::pushMassage();
-        die(json_encode($comment));
+        $comment ? die(json_encode($comment)) : die();
 
     }
 
