@@ -18,8 +18,12 @@ function addComment(comment){
                 document.getElementById('comments').appendChild(createComment(res))
             }else{
                 for (let elem of allAnswers){
+                    let bool = false;
                     if (res.comment_id === elem.dataset.commentid){
-                        const com = createComment(res, true)
+                        if (res.parent == document.getElementById('comments').dataset.nesting){
+                            bool = true;
+                        }
+                        const com = createComment(res, true, bool);
                         elem.appendChild(com);
 
                         com.scrollIntoView({
@@ -34,13 +38,17 @@ function addComment(comment){
         () => applyPostId()
     )
 }
-function createComment(comment, bool = false) {
+function createComment(comment, bool = false, removebtn = false) {
     const li = document.createElement('li');
     let answer = `<button 
                         class="answer btn btn-secondary" 
-                        data-parent="${comment.parent == 0 ? 1: +comment.parent}"
+                        data-parent="${comment.parent}"
                         data-commentid ="${comment.id}">answer</button>`;
     if (+document.getElementById('comments').dataset.nesting == comment.parent){
+        answer = '';
+    }
+
+    if (removebtn){
         answer = '';
     }
 
@@ -83,6 +91,7 @@ function applyPostId() {
     const answers = document.querySelectorAll('.answer');
     for (let i = 0; i < answers.length; i++){
         answers[i].addEventListener('click', function () {
+
             comment_id.value = this.dataset.commentid;
             const blockID = 'form';
             document.getElementById(blockID).scrollIntoView({

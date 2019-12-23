@@ -8,7 +8,7 @@ class RegisterModel extends Model
 {
     public static function registerUser()
     {
-        $db_connect = DataBase::db_connect();
+        $db = DataBase::db_connect();
 
         $user_name = $_POST['name'];
         if (strlen($user_name) < 5){
@@ -34,7 +34,9 @@ class RegisterModel extends Model
                 'status' => 'Некоректный логин',
             ];
         }
-        mysqli_query($db_connect,"INSERT INTO `users` ( `name`, `email`, `password`, `login`) VALUES ( '$user_name', '$user_email', '$user_password', '$user_login');");
+
+        $query = $db->prepare("INSERT INTO `users` ( `name`, `email`, `password`, `login`) VALUES ( '$user_name', '$user_email', '$user_password', '$user_login');");
+        $query->execute();
         return false;
     }
 }
