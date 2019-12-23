@@ -14,11 +14,11 @@ class CommentsModel extends Model
         $id = $_POST['comment_id'];
         $user_id = $_SESSION['auth']['id'];
         $user_name = $_SESSION['auth']['name'];
-        $parent = $_POST['parent'];
-        if ($parent > NESTING_COMMENTS){
-            return false;
-        }
-        mysqli_query($db_comment,"INSERT INTO `comments` (`massage`, `user_id`,`parent`,`user_name`,`comment_id`) VALUES ( '$mes' , '$user_id','$parent','$user_name', $id)");
+//        $parent = $_POST['parent'];
+//        if ($parent > NESTING_COMMENTS){
+//            return false;
+//        }
+        mysqli_query($db_comment,"INSERT INTO `comments` (`massage`, `user_id`,`user_name`,`comment_id`) VALUES ( '$mes' , '$user_id','$user_name', $id)");
 
         $comment = mysqli_query($db_comment, "SELECT * FROM comments ORDER BY id DESC LIMIT 1");
         return mysqli_fetch_assoc($comment);
@@ -37,13 +37,14 @@ class CommentsModel extends Model
     }
 
 
-    public static function transformData($comments, $id = null)
+    public static function transformData($comments, $id = null, $inc = 0)
     {
         $parent = [];
         foreach ($comments as $comment){
-            if ($comment['comment_id'] === $id ){
+            if ($comment['comment_id'] === $id and $inc <= NESTING_COMMENTS){
 
-                $comment['answers'] = self::transformData($comments, $comment['id']);
+                $comment['parent'] = $inc;
+                $comment['answers'] = self::transformData($comments, $comment['id'], $inc + 1);
                 array_push($parent, $comment);
             }
         }

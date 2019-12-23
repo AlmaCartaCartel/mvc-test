@@ -17,7 +17,6 @@ function addComment(comment){
             if (res.comment_id === null){
                 document.getElementById('comments').appendChild(createComment(res))
             }else{
-                console.log(res);
                 for (let elem of allAnswers){
                     if (res.comment_id === elem.dataset.commentid){
                         const com = createComment(res, true)
@@ -81,12 +80,10 @@ function renderComments(arr, container = null){
 
 function applyPostId() {
     const comment_id = document.querySelector('.comment_id');
-    const parent_lvl = document.querySelector('.parent_lvl');
     const answers = document.querySelectorAll('.answer');
     for (let i = 0; i < answers.length; i++){
         answers[i].addEventListener('click', function () {
             comment_id.value = this.dataset.commentid;
-            parent_lvl.value = +this.dataset.parent + 1;
             const blockID = 'form';
             document.getElementById(blockID).scrollIntoView({
                 behavior: 'smooth',
