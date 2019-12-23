@@ -22,7 +22,7 @@ include 'layout/header.php';
                 <form action="" method="post" class="comment" id="form">
                     <h4> Message </h4>
 
-                    <input type="hidden" name="parent" value='null' class="parent_lvl" >
+                    <input type="hidden" name="parent" value='0' class="parent_lvl" >
                     <input type="hidden" name="comment_id" value='null' class="comment_id" >
                     <textarea name="message" id="textarea" class="form-control" cols="30" rows="3" placeholder="Введите комментарий"></textarea><br>
 

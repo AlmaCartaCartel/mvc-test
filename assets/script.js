@@ -17,6 +17,7 @@ function addComment(comment){
             if (res.comment_id === null){
                 document.getElementById('comments').appendChild(createComment(res))
             }else{
+                console.log(res);
                 for (let elem of allAnswers){
                     if (res.comment_id === elem.dataset.commentid){
                         const com = createComment(res, true)
@@ -105,8 +106,9 @@ let form = document.getElementById('form');
 
 if (form !== null){
     btn = document.getElementById('submit')
-    form.addEventListener('submit',  async function (event) {
+    form.addEventListener('submit',    async function (event) {
         event.preventDefault();
+
         let response = await fetch('/comments/add',{
             method: 'POST',
             body: new FormData(this)
@@ -116,7 +118,7 @@ if (form !== null){
                 `Не удалось запросить данные по адресу`
             );
         }
-        await addComment(response.json());
+         await addComment(response.json());
         document.getElementById('textarea').value = '';
 
     });
